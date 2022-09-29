@@ -13,11 +13,15 @@ const YAxis = ({ minY, maxY, pos }) => {
           <span
             className="absolute w-full border-2 left-24 border-dashed"
             style={{
-              bottom: `calc(${pos(v)} + 0.75rem)`,
+              bottom: `calc(${pos(v)} + 0.5rem)`,
               width: "calc(100% - 6rem)",
+              lineHeight: "1rem",
             }}
           />
-          <span className="absolute" style={{ bottom: `calc(${pos(v)})` }}>
+          <span
+            className="absolute"
+            style={{ bottom: `calc(${pos(v)})`, lineHeight: "1rem" }}
+          >
             {v}€
           </span>
         </Fragment>
@@ -26,12 +30,16 @@ const YAxis = ({ minY, maxY, pos }) => {
   );
 };
 
-export const BoxPlot = ({ salaries, minSalary, maxSalary }) => {
-  const [p10, p25, p50, p75, p90] = percentiles(salaries, ...PERCENTILES).map(
-    (v) => Math.floor(v / 100)
-  );
+export const BoxPlot = ({ job, minSalary, maxSalary }) => {
+  const [p10, p25, p50, p75, p90] = [
+    job.p10,
+    job.p25,
+    job.p50,
+    job.p75,
+    job.p90,
+  ];
 
-  const { minY, maxY } = yBounds(minSalary / 100, maxSalary / 100);
+  const { minY, maxY } = yBounds(minSalary, maxSalary);
 
   const pos = posAxis(minY, maxY);
 
@@ -49,28 +57,28 @@ export const BoxPlot = ({ salaries, minSalary, maxSalary }) => {
         ].map(([low, hi], i) => (
           <span
             key={i}
-            className="absolute left-48 w-0 border-2 border-lime-500"
+            className="absolute left-48 w-0 border-2 border-emerald-600"
             style={{
-              bottom: `calc(${pos(low)} + 1.5rem)`,
-              top: `calc(${pos(hi, true)} + 1.5rem)`,
+              bottom: `calc(${pos(low)} + 1rem)`,
+              top: `calc(${pos(hi, true)} + 1rem)`,
             }}
           />
         ))}
 
         {/* box */}
         <span
-          className="absolute w-full rounded-lg border-4 border-lime-500 bg-pink-300"
+          className="absolute w-full rounded-lg border-4 border-emerald-600 bg-pink-300"
           style={{
-            bottom: `calc(${pos(p25)} + 0.75rem + 1px)`,
-            top: `calc(${pos(p75, true)} + 0.75rem)`,
+            bottom: `calc(${pos(p25)} + 0.5rem)`,
+            top: `calc(${pos(p75, true)} - 4px + 0.5rem)`,
           }}
         />
 
         {/* median */}
         <span
-          className="absolute w-full border-2 border-lime-500"
+          className="absolute w-full border-2 border-emerald-600"
           style={{
-            bottom: `calc(${pos(p50)} + 0.75rem)`,
+            bottom: `calc(${pos(p50)} + 0.5rem)`,
           }}
         />
 
@@ -78,11 +86,12 @@ export const BoxPlot = ({ salaries, minSalary, maxSalary }) => {
         {[p10, p25, p50, p75, p90].map((pValue, i) => (
           <div
             key={i}
-            className="absolute left-36 w-24 flex justify-center mx-auto rounded border-lime-500 box-border border-4 bg-white"
+            className="absolute left-36 w-24 flex justify-center mx-auto rounded border-emerald-600 box-border border-4 bg-white"
             id={`P${PERCENTILES[i]}`}
             data-testid={`P${PERCENTILES[i]}`}
             style={{
               bottom: `calc(${pos(pValue)} - 2px)`,
+              lineHeight: "1rem",
             }}
           >
             {pValue}€

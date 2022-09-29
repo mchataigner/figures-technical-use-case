@@ -9,11 +9,12 @@ describe("Home", function () {
           {
             id: 1,
             name: "QA",
-            employees: Array.from(Array(100), (_, i) => ({
-              id: i,
-              jobId: 1,
-              salary: 1000_00 * i,
-            })),
+            p10: 10000,
+            p25: 25000,
+            p50: 50000,
+            p75: 75000,
+            p90: 90000,
+            count: 100,
           },
         ]}
         minSalary={100}

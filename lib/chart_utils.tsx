@@ -13,8 +13,8 @@ export const yAxis = (min, max, steps = 5) =>
 export const posAxis = (minY, maxY) => {
   return (y, reversed = false) => {
     if (!reversed) {
-      return `${(y - minY) / (maxY - minY)} * (100% - 2rem)`;
+      return `${(y - minY) / (maxY - minY)} * (100% - 2rem) + .5rem`;
     }
-    return `${1 - (y - minY) / (maxY - minY)} * (100% - 2rem)`;
+    return `${1 - (y - minY) / (maxY - minY)} * (100% - 2rem) + .5rem`;
   };
 };
