@@ -28,7 +28,9 @@ async function main() {
         data: new Array(employeesCount).fill(0).map(() => {
           return {
             jobId: job.id,
-            salary: Math.round(30000_00 + Math.random() * 50000_00),
+            salary: Math.round(
+              30000_00 + job.id * 2000_00 + Math.random() * 50000_00
+            ),
           };
         }),
       });
